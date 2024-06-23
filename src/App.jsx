@@ -7,8 +7,8 @@ function App() {
     <div className="App">
       <header className="App-header">
         <h1>Recodificar Articulo</h1>
-        <UpdateArticuloForm />
       </header>
+      <UpdateArticuloForm />
     </div>
   )
 }
