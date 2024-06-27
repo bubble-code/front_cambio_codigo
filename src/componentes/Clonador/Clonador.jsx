@@ -59,49 +59,53 @@ const UpdateArticuloForm = () => {
     };
 
     return (
-        <div>
-            <form className="form-container" onSubmit={handleSubmit}>
-                <div className="form-group">
-                    <div className='input-container'>
-                        <div className='input-group'>
-                            <label>Old ID Articulo:</label>
+        <div className="max-w-4xl mx-auto mt-10 p-6 bg-white shadow-md rounded-md">
+          <h1 className="text-xl font-bold mb-4">Clonador de Artículos</h1>
+            <form className="space-y-4" onSubmit={handleSubmit}>
+                    <div className="flex space-x-4">
+                        <div className="w-1/2 relative">
+                            <label className="block text-sm font-medium text-gray-700">Old ID Articulo:</label>
                             <input
                                 type="text"
                                 value={oldIdArticulo}
                                 onChange={handleSearchChange}
+                                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                             />
                             {suggestions.length > 0 && (
-                                <ul className="suggestions-list">
+                                <ul className="absolute z-10 bg-white border border-gray-300 rounded-md shadow-lg max-h-40 w-full overflow-y-auto">
                                     {suggestions.map(({ IDArticulo, DescArticulo }, index) => (
-                                        <li key={index} onClick={() => handleSuggestionClick(IDArticulo, DescArticulo)}>
+                                        <li className="px-3 py-2 cursor-pointer hover:bg-gray-200"
+                                         key={index} onClick={() => handleSuggestionClick(IDArticulo, DescArticulo)}>
                                             {IDArticulo} - {DescArticulo}
                                         </li>
                                     ))}
                                 </ul>
                             )}
                         </div>
-                        <div className='input-group'>
-                            <label>Descripcion:</label>
+                        <div className="w-1/2">
+                            <label className="block text-sm font-medium text-gray-700">Descripcion:</label>
                             <input
                                 type="text"
                                 ref={descArticuloRef}
                                 readOnly
+                                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm bg-gray-100 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                             />
                         </div>
                     </div>
-                </div>
-                <div className="form-group">
-                    <label>New ID Articulo:</label>
+                <div >
+                    <label className="block text-sm font-medium text-gray-700">New ID Articulo:</label>
                     <input
                         type="text"
                         // ref={newIdArticuloRef}
                         value={newIdArticulo}
                         onChange={(e) => setNewIdArticulo(e.target.value)}
+                        className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                     />
                 </div>
-                <button type="submit">Renombrar Articulo</button>
+                <button className="w-full bg-indigo-600 text-white py-2 px-4 rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                type="submit">Renombrar Articulo</button>
             </form>
-            {message && <p className="message">{message}</p>}
+            {message && <p className="mt-4 text-center text-sm text-green-600">{message}</p>}
         </div>
     );
 };
