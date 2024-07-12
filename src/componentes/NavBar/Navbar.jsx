@@ -21,6 +21,7 @@ const MiNavbar = () => {
                 <Button className={Classes.MINIMAL} icon="home" text="Home" onClick={() => goToClick("/")} />
                 <Button className={Classes.MINIMAL} icon="document" text="Clonador" onClick={() => goToClick("clonador")} />
                 <Button className={Classes.MINIMAL} icon="document" text="Tutoriales" onClick={() => goToClick("tutoriales")} />
+                <Button className={Classes.MINIMAL} icon="document" text="IA" onClick={() => goToClick("ia")} />
             </NavbarGroup>
         </Navbar>
     );

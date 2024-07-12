@@ -4,6 +4,7 @@ import Layout from "../componentes/Layout/Layout"
 // import FormTabExcel from "../components/FormTabExcel"
 import Clonador from "../componentes/Clonador/Clonador"
 import Tutoriales from "../componentes/Tutoriales/notasOFs"
+import IaLayout  from "../componentes/IA/IaLayout"
 
 
 export const routes = createBrowserRouter([
@@ -24,6 +25,10 @@ export const routes = createBrowserRouter([
       {
         path: 'tutoriales',
         element: <Tutoriales/>
+      },
+      {
+        path:'ia',
+        element:<IaLayout/>
       }
     ]
   }
