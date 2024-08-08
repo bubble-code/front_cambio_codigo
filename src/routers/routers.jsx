@@ -5,6 +5,7 @@ import Layout from "../componentes/Layout/Layout"
 import Clonador from "../componentes/Clonador/Clonador"
 import Tutoriales from "../componentes/Tutoriales/notasOFs"
 import IaLayout  from "../componentes/IA/IaLayout"
+import HelpCarousel from "../componentes/HelpCarousel/HelpCarousel"
 
 
 export const routes = createBrowserRouter([
@@ -29,6 +30,10 @@ export const routes = createBrowserRouter([
       {
         path:'ia',
         element:<IaLayout/>
+      },
+      {
+        path:'cfamilia',
+        element:<HelpCarousel/>
       }
     ]
   }
