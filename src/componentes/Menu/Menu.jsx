@@ -7,9 +7,10 @@ import {
     Navbar
 } from "@blueprintjs/core";
 
-const Menu = ({ items, classname }) => {
+const Menu = ({ items, classname, title }) => {
     return (
         <BMenu className={classname}>
+            {title && <span>Ordenes de Fabricacion</span>}
             {
                 items.map((item, index) => {
                     if (item.type == 'divider') {

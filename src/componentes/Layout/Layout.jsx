@@ -3,7 +3,7 @@ import MiNavbar from "../NavBar/Navbar";
 const Layout = () => {
   return (
     <div className="main-app flex flex-col min-h-screen">
-      <div className="header-app">
+      <div className="w-full bg-gray-700">
         <MiNavbar />
       </div>
       {/* className="flex flex-grow items-center justify-center px-10 mx-auto" */}
