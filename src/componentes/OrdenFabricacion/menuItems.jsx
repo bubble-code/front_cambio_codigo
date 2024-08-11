@@ -1,19 +1,7 @@
-import { PalantirLogo } from "../Menu/Menu"
-import { Icon } from '@blueprintjs/core';
-
-import { useNavigate } from "react-router-dom";
-
-
-export const useMenuItems = () => {
-    const navigate = useNavigate();
-    const goToClick = (path) => {
-        navigate(path);
-    };
-    return [
-        { type: 'divider' },
-        { icon: 'new-text-box', text: 'Graficas' },
-        { icon: 'new-object', text: 'Analisis' },
-        { icon: 'new-link', text: 'Crear', onclick: () => { goToClick('crearOF') } },
-        { type: 'divider' }
-    ]
-}
+export const MenuItems = [
+    { type: 'divider' },
+    { icon: 'new-text-box', text: 'Graficas', path: '/ordenF/graficas' },
+    { icon: 'new-object', text: 'Analisis', path: '/ordenF/analisis' },
+    { icon: 'new-link', text: 'Crear', path: '/ordenF/crearOF' },
+    { type: 'divider' }
+]

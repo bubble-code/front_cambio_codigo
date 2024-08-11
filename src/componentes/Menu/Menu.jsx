@@ -2,29 +2,32 @@ import {
     Menu as BMenu,
     Classes,
     MenuItem as BMenuItem,
-    MenuDivider,
-    Icon,
-    Navbar
+    MenuDivider
 } from "@blueprintjs/core";
+import { NavLink } from "react-router-dom";
+
+function classNames(...classes) {
+    return classes.filter(Boolean).join(' ')
+}
 
 const Menu = ({ items, classname, title }) => {
     return (
-        <BMenu className={classname}>
-            {title && <span>Ordenes de Fabricacion</span>}
+        <BMenu className="flex flex-col font-roboto">
+            {title || ''}
             {
                 items.map((item, index) => {
                     if (item.type == 'divider') {
                         return <MenuDivider key={index} />
                     }
                     return (
-                        <MenuItem
+                        <NavLink
+                            className={({ isActive }) => classNames(isActive ? 'bg-gray-900 text-white' : 'text-gray-600 hover:bg-gray-700 hover:text-white',
+                                'rounded-md px-3 py-2 text-sm font-medium')}
                             key={index}
-                            icon={item.icon}
-                            text={item.text}
-                            labelElement={item.labelElement}
-                            onClick={item.onclick}
-                            intent={item.intent}
-                        />
+                            to={item.path}
+                        >
+                            {item.text}
+                        </NavLink>
                     )
                 }
                 )

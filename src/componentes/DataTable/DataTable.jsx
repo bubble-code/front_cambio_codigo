@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { useTable } from 'react-table';
 
-const DataTable = ({ data }) => {
+const DataTable = ({ data, matchingItems }) => {
     const [hiddenColumns, setHiddenColumns] = useState([]);
 
     const isDate = (value) => {
@@ -51,50 +51,30 @@ const DataTable = ({ data }) => {
 
     return (
         <div className="p-4">
-            {/* <div className="mb-4">
-                <p className="mb-2 text-sm font-medium text-gray-700">Ocultar/Mostrar Columnas</p>
-                <div className="flex flex-wrap">
-                    {allColumns.map((column) => (
-                        <div key={column.id} className="mr-2">
-                            <label className="inline-flex items-center">
-                                <input
-                                    type="checkbox"
-                                    checked={!hiddenColumns.includes(column.id)}
-                                    onChange={() => handleColumnToggle(column.id)}
-                                    className="form-checkbox h-4 w-4 text-indigo-600"
-                                />
-                                <span className="ml-2 text-sm text-gray-700">{column.Header}</span>
-                            </label>
-                        </div>
-                    ))}
-                </div>
-            </div> */}
-
             <table {...getTableProps()} className="min-w-full bg-white border border-gray-300">
                 <thead>
-                    {headerGroups.map((headerGroup) => (
-                        <tr {...headerGroup.getHeaderGroupProps()} key={headerGroup.id}>
-                            {headerGroup.headers.map((column) => (
-                                <th
-                                    {...column.getHeaderProps()}
-                                    className="px-4 py-2 border-b border-gray-300 bg-gray-50 text-left font-medium text-gray-700"
-                                >
-                                    {column.render('Header')}
-                                </th>
-                            ))}
-                        </tr>
-                    ))}
+                    {headerGroups.map((headerGroup) => {
+                        return (
+                            <tr {...headerGroup.getHeaderGroupProps()} key={headerGroup.id}>
+                                {headerGroup.headers.map((column) => (
+                                    <th
+                                        {...column.getHeaderProps()}
+                                        className="px-4 py-2 border-b border-gray-300 bg-gray-50 text-left font-medium text-gray-700"
+                                    >
+                                        {column.render('Header')}
+                                    </th>
+                                ))}
+                            </tr>
+                        )
+                    })}
                 </thead>
                 <tbody {...getTableBodyProps()}>
                     {rows.map((row) => {
                         prepareRow(row);
                         return (
-                            <tr {...row.getRowProps()} key={row.id}>
+                            <tr {...row.getRowProps()} key={row.id} className={matchingItems.map(x=>x.IDArticulo).includes(row.cells[1].value) ? "bg-green-100" : ""}>
                                 {row.cells.map((cell) => (
-                                    <td
-                                        {...cell.getCellProps()}
-                                        className="px-4 py-2 border-b border-gray-300 text-xs text-gray-700"
-                                    >
+                                    <td {...cell.getCellProps()} className="px-4 py-2 border-b border-gray-300 text-xs text-gray-700" >
                                         {cell.render('Cell')}
                                     </td>
                                 ))}
