@@ -44,7 +44,7 @@ const UpdateArticuloForm = () => {
         if (search.length > 2) {
             try {
                 // const response = await axios.get(`http://10.0.0.19:5000/autocomplete?search=${search}`);
-                const response = await axios.get(`http://192.168.1.145:5000/autocomplete?search=${search}`);
+                const response = await axios.get(`http://192.168.1.145/api/autocomplete?search=${search}`);
                 setSuggestions(response.data);
             } catch (error) {
                 console.error('Error fetching autocomplete suggestions', error);

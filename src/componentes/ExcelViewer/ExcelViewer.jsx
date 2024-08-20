@@ -74,7 +74,7 @@ const ExcelViewer = () => {
                     {/* {progress}% */}
                 </div>
             )}
-            <div className="flex space-x-4 my-4">
+            {excelData.length > 0 && <div className="flex space-x-4 my-4">
                 <button
                     onClick={checkItemsInDatabase}
                     className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
@@ -93,7 +93,7 @@ const ExcelViewer = () => {
                 >
                     Reiniciar Tabla
                 </button>
-            </div>
+            </div>}
             {excelData.length > 0 && <DataTable data={excelData} matchingItems={matchingItems} />}
         </div>
     );
