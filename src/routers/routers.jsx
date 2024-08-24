@@ -6,6 +6,8 @@ import IaLayout from "../componentes/IA/IaLayout"
 import HelpCarousel from "../componentes/HelpCarousel/HelpCarousel"
 import { LayoutOF } from "../componentes/OrdenFabricacion/Layout"
 import ExcelViewer from "../componentes/ExcelViewer/ExcelViewer"
+import Home from "../componentes/Home/Home"
+import LayoutGraficasOf from "../componentes/GraficasOf/LayoutGraficasOf"
 
 
 export const routes = createBrowserRouter([
@@ -13,6 +15,10 @@ export const routes = createBrowserRouter([
     element: <Layout />,
     path: '/',
     children: [
+      {
+        index: true,
+        element: <Home />
+      },
       {
         path: 'clonador',
         // element: <Automate />,
@@ -42,6 +48,10 @@ export const routes = createBrowserRouter([
           {
             path: 'crearOF',
             element: <ExcelViewer />
+          },
+          {
+            path: 'graficasOf',
+            element: <LayoutGraficasOf />
           }
         ]
       }

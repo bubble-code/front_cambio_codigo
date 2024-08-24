@@ -35,28 +35,76 @@ const ExcelViewer = () => {
             if (acc[cur[0]]) {
                 acc[cur[0]].push(cur);
             } else {
-                acc[cur[0]] = [cur]
+                acc[cur[0]] = [cur];
             }
-            return acc
+            return acc;
         }, {});
+    
+        let updatedExcelData = [...excelData];  // Copia de los datos originales para actualizarlos
+    
         try {
-            const response = await fetch('http://192.168.1.145:5000/generarOF', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    listaID: listaID
-                }),
-            });
-            const data = await response.json();
-            console.log(data)
+            for (let articuloID in listaID) {
+                const registros = listaID[articuloID];  // Agrupación de registros por `articuloID`
+    
+                const response = await fetch('http://192.168.1.145:5000/generarOF', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        listaID: { [articuloID]: registros }  // Enviar la agrupación específica
+                    }),
+                });
+    
+                const data = await response.json();
+                console.log("data:",data.message)
+                const mensaje = data.message || "Error al generar la Orden";
+                if (data.status === "success") {
+                    console.log(`Orden para el artículo ${articuloID} generada con éxito`);
+                    // Marcar los registros como exitosos en `updatedExcelData`
+                    const newExcelData = updatedExcelData.map((row) => {
+                        if (row[0] == articuloID) {
+                            // Si la fila ya tiene una columna de resultado, actualízala
+                            if (row.length > 9) {
+                                row[10] = mensaje;  // Suponiendo que la última columna es la 12va (índice 11)
+                            } else {
+                                // Si no, añade la columna del resultado
+                                row.push(mensaje);
+                            }
+                        }
+                        return row;
+                    });
+                    setExcelData(newExcelData);
+                } else {
+                    console.error(`Error en la generación de la orden para el artículo ${articuloID}`, data);
+                    // Marcar los registros como fallidos
+                    registros.forEach((registro) => {
+                        const index = updatedExcelData.findIndex(row => row[0] === articuloID);
+                        if (index !== -1) {
+                            updatedExcelData[index] = [...updatedExcelData[index], "Error al generar la Orden"];
+                        }
+                    });
+                }
+            }
         } catch (error) {
-            console.error("Error checking items in database: ", error);
+            console.error("Error al procesar las órdenes: ", error);
+            // En caso de error en la solicitud, marcar todos los registros con un fallo general
+            for (let articuloID in listaID) {
+                const registros = listaID[articuloID];
+                registros.forEach((registro) => {
+                    const index = updatedExcelData.findIndex(row => row[0] === articuloID);
+                    if (index !== -1) {
+                        updatedExcelData[index] = [...updatedExcelData[index], "Error al generar la Orden"];
+                    }
+                });
+            }
         } finally {
+            // Aquí puedes actualizar la tabla o interfaz de usuario con `updatedExcelData`
+            // Dependiendo de cómo se gestiona el estado de la tabla, esto puede variar
             setLoading(false);
         }
     }
+    
 
     const resetTable = () => {
         // Funcionalidad para reiniciar la tabla

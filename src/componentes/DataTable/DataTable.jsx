@@ -71,8 +71,10 @@ const DataTable = ({ data, matchingItems }) => {
                 <tbody {...getTableBodyProps()}>
                     {rows.map((row) => {
                         prepareRow(row);
+                        // console.log(row.cells)
+                        // className={matchingItems.map(x=>x.IDArticulo).includes(row.cells[1].value) ? "bg-green-100" : ""}
                         return (
-                            <tr {...row.getRowProps()} key={row.id} className={matchingItems.map(x=>x.IDArticulo).includes(row.cells[1].value) ? "bg-green-100" : ""}>
+                            <tr {...row.getRowProps()} key={row.id} className={row.cells[10].value.includes('OF')?"bg-green-200" :row.cells[10].value.includes('S/F') || row.cells[10].value.includes('S/A') ? "bg-red-200" : ""}>
                                 {row.cells.map((cell) => (
                                     <td {...cell.getCellProps()} className="px-4 py-2 border-b border-gray-300 text-xs text-gray-700" >
                                         {cell.render('Cell')}

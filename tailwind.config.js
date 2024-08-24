@@ -9,6 +9,9 @@ export default {
       fontFamily: {
         roboto: ["Roboto"]
       },
+      backgroundImage: {
+        'favram': "url('src/assets/favram01.jpg')"
+      },
     },
   },
   plugins: [],
