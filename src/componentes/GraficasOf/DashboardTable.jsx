@@ -2,16 +2,21 @@ import { useEffect, useMemo, useState } from 'react';
 import { useTable } from 'react-table';
 import { motion } from 'framer-motion';
 import axios from 'axios';
+import PropTypes from "prop-types";
 
-export default function DashboardTable() {
+export default function DashboardTable({ startDate, endDate }) {
     const [data, setData] = useState([]);
 
     useEffect(() => {
         // Llamada a tu API Flask para obtener los datos.
         const fetchData = async () => {
             try {
-                const response = await axios.get(`http://192.168.1.145:5000/getOrdenes`);
-                const cp = await axios.get(`http://192.168.1.145:5000/getCapacidadTD`);
+                const start = startDate ? startDate.toISOString().split('T')[0] : null;
+                const end = endDate ? endDate.toISOString().split('T')[0] : null;
+                const cp = await axios.post(`http://192.168.1.145:5000/getCapacidadTD`, {
+                    startDate: start,
+                    endDate: end
+                });
                 console.log(cp.data)
                 setData(cp.data);
             } catch (error) {
@@ -19,8 +24,9 @@ export default function DashboardTable() {
             }
         };
 
+
         fetchData();
-    }, []);
+    }, [endDate, startDate]);
 
     const columns = useMemo(
         () => [
@@ -138,3 +144,8 @@ export default function DashboardTable() {
         </div>
     );
 }
+
+DashboardTable.propTypes = {
+    startDate: PropTypes.instanceOf(Date),
+    endDate: PropTypes.instanceOf(Date)
+};
