@@ -16,7 +16,8 @@ export default function DashboardPorSecciones({ startDate, endDate }) {
             try {
                 const start = startDate ? startDate.toISOString().split('T')[0] : null;
                 const end = endDate ? endDate.toISOString().split('T')[0] : null;
-                const response = await axios.post(`http://192.168.1.145:5000/getCapacidadTD`, {
+                //const response = await axios.post(`http://192.168.1.145:5000/getCapacidadTD`, {
+                const response = await axios.post(`http://10.0.0.19:5000/getCapacidadTD`, {
                     startDate: start,
                     endDate: end
                 });
@@ -39,7 +40,8 @@ export default function DashboardPorSecciones({ startDate, endDate }) {
 
     const handleShowVerMas = async (centro) => {
         try {
-            const response = await axios.post(`http://192.168.1.145:5000/getOFFromCentro`, {
+            //const response = await axios.post(`http://192.168.1.145:5000/getOFFromCentro`, {
+            const response = await axios.post(`http://10.0.0.19:5000/getOFFromCentro`, {
                 centro: centro
             });
             setOrdenes(response.data);

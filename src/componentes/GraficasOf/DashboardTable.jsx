@@ -13,7 +13,8 @@ export default function DashboardTable({ startDate, endDate }) {
             try {
                 const start = startDate ? startDate.toISOString().split('T')[0] : null;
                 const end = endDate ? endDate.toISOString().split('T')[0] : null;
-                const cp = await axios.post(`http://192.168.1.145:5000/getCapacidadTD`, {
+                //const cp = await axios.post(`http://192.168.1.145:5000/getCapacidadTD`, {
+                const cp = await axios.post(`http://10.0.0.19:5000/getCapacidadTD`, {
                     startDate: start,
                     endDate: end
                 });
