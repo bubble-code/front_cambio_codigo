@@ -13,7 +13,7 @@ const MiNavbar = () => {
         { name: 'Inicio', href: "/", current: true },
         { name: 'Team', href: 'teams', current: false },
         { name: 'Clonador', href: "clonador", current: false },
-        { name: 'Producción', href: "ordenF", current: false },
+        { name: 'Fábrica', href: "fabrica", current: false },
         { name: 'Almacén', href: "almacen", current: false },
     ]
     return (

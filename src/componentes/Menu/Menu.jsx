@@ -5,29 +5,69 @@ import {
     MenuDivider
 } from "@blueprintjs/core";
 import { NavLink } from "react-router-dom";
+import { useState } from "react";
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
 const Menu = ({ items, classname, title }) => {
+    const [openSubmenu, setOpenSubmenu] = useState(null); // Estado para gestionar submenús abiertos
+
+    const toggleSubmenu = (index) => {
+        if (openSubmenu === index) {
+            setOpenSubmenu(null); // Cerrar submenú si está abierto
+        } else {
+            setOpenSubmenu(index); // Abrir submenú
+        }
+    };
     return (
         <BMenu className="flex flex-col font-roboto">
-            {title || ''}
+            {title && <div className="text-xl p-4">{title}</div>}
             {
                 items.map((item, index) => {
                     if (item.type == 'divider') {
                         return <MenuDivider key={index} />
                     }
+                    const hasSubItems = item.subItems && item.subItems.length > 0;
                     return (
-                        <NavLink
-                            className={({ isActive }) => classNames(isActive ? 'bg-gray-900 text-white' : 'text-gray-600 hover:bg-gray-700 hover:text-white',
-                                'rounded-md px-3 py-2 text-sm font-medium')}
-                            key={index}
-                            to={item.path}
-                        >
-                            {item.text}
-                        </NavLink>
+                        <div key={index}>
+                            <div className={`cursor-pointer ${item.subItems ? 'font-semibold' : ''}`} onClick={() => item.subItems ? toggleSubmenu(index) : null}>
+                                {!hasSubItems ? (<NavLink
+                                    className={({ isActive }) => classNames(isActive ? 'bg-gray-900 text-white' : 'text-gray-600 hover:bg-gray-700 hover:text-white',
+                                        'rounded-md px-3 py-2 text-sm font-medium')}
+                                    // key={index}
+                                    to={item.path}
+                                >
+                                    {item.text}
+                                </NavLink>) : (
+                                    <div
+                                        className="cursor-pointer text-gray-600 hover:bg-gray-700 hover:text-white font-semibold rounded-md px-3 py-2 text-sm font-medium"
+                                        onClick={() => toggleSubmenu(index)}
+                                    >
+                                        {item.text}
+                                    </div>
+                                )}
+                            </div>
+                            {item.subItems && openSubmenu === index && (
+                                <div className="pl-4 space-y-2">
+                                    {item.subItems.map((subItem, subIndex) => (
+                                        <NavLink
+                                            key={subIndex}
+                                            to={subItem.path}
+                                            className={({ isActive }) =>
+                                                classNames(
+                                                    isActive ? 'bg-gray-700 text-white' : 'text-gray-500 hover:bg-gray-600 hover:text-white',
+                                                    'block rounded-md px-3 py-2 text-sm'
+                                                )
+                                            }
+                                        >
+                                            {subItem.text}
+                                        </NavLink>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
                     )
                 }
                 )
